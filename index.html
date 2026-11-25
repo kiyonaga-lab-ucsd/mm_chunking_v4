@@ -146,7 +146,7 @@ const allTrialVars = jsPsych.randomization.shuffle(
     all_trial_types.flatMap(bt => buildTrialVariables(bt, nTrialsPerCell))
 );
 
-// Split into blocks of 32, hence 288 / 32 = 9 blocks
+// Split into blocks of 30, hence 240 / 30 = 8 blocks
 let blocks = [];
 const blockSize = 30;
 if (total_trials % blockSize != 0){
@@ -265,7 +265,7 @@ timeline.push({
 timeline.push({
     type: jsPsychPipe,
     action: "save",
-    experiment_id: "Hx6GxC7mZk8P",
+    experiment_id: "4gR7WjNF5ofQ",
     filename: filename,
     data_string: () => jsPsych.data.get().csv()
 });

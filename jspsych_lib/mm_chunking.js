@@ -383,6 +383,16 @@ var jsPsychMMChunking = (function (jsPsych) {
             var endTrial = () => {
                 if (trialEnded) return;
                 trialEnded = true;
+
+                // Re-index by placeholder: entry p describes whatever was shown at placeholder p.
+                // Placeholders that never held an item stay null.
+                const featureByPos = new Array(num_placeholders).fill(null);
+                const valueByPos   = new Array(num_placeholders).fill(null);
+                positions.forEach((p, i) => {
+                    featureByPos[p] = trial.stim_types[i];
+                    valueByPos[p]   = values[i];
+                });
+
                  trialData = {
                     block_type:          trial.block_type,
                     is_practice:         trial.is_practice,
@@ -398,8 +408,8 @@ var jsPsychMMChunking = (function (jsPsych) {
                     clicked_wrong_wheel: reported_feature !== probeType,
                     error:               err,
                     trial_rt:            trial_rt,
-                    all_positions:       positions,
-                    all_values:          values,
+                    all_positions:       featureByPos,  // feature type at placeholder 0..N-1
+                    all_values:          valueByPos,    // feature value at placeholder 0..N-1                    
                     rc_positions:        rcPos,
                     rc_values:           rcVal,
                     display_time:        trial.display_time,
